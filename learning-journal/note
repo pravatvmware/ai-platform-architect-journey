@@ -1,0 +1,33 @@
+Concept,AWS Paradigm,GCP Paradigm (The Shift),Architect's View for AI
+Boundary,AWS Account: Hard boundaries. You use AWS Organizations to manage dozens or hundreds of accounts.,"GCP Project: Everything lives in a Project. Projects sit inside Folders, which sit under an Organization.","You will likely isolate your Dev, Stage, and Prod AI environments into separate GCP Projects, rather than entirely separate accounts."
+Identity,"IAM Roles & Policies: Highly granular, attached to resources or identities.","IAM (Project-centric): Permissions flow top-down. If you grant an AI agent access at the Folder level, it inherits that access in all Projects below it.",GCP Service Accounts are first-class citizens. Your Agentic workflows will run as Service Accounts to securely call Vertex AI endpoints or read Cloud Storage.
+
+Concept,AWS Paradigm,GCP Paradigm (The Shift),Architect's View for AI
+Containers,EKS / ECS: Often requires significant configuration for networking and node management.,GKE (Google Kubernetes Engine): GKE is widely considered the gold standard. GKE Autopilot abstracts away the nodes entirely.,GKE is your workhorse. You will package your Python-based AI agents into containers and let GKE Autopilot handle the scaling. It natively supports GPU provisioning for intense workloads.
+Serverless,AWS Lambda: Event-driven functions.,Cloud Run: Serverless containers.,"For lightweight AI tasks (e.g., a webhook that triggers an LLM summarization), Cloud Run is incredible. You provide a container, and GCP scales it to zero when idle, saving massive GPU/CPU costs."
+
+Concept,AWS Paradigm,GCP Paradigm (The Shift),Architect's View for AI
+Network,VPC (Regional): Spans multiple AZs within one region.,VPC (Global): A single GCP VPC spans the entire globe. Subnets are regional.,Global VPCs make routing traffic to the nearest/cheapest AI inference endpoints significantly easier without complex peering.
+Data Perimeter,VPC Endpoints / PrivateLink: Keeps traffic off the public internet.,VPC Service Controls (VPC-SC): This creates a literal security perimeter around your GCP resources.,"Crucial Skill: You will use VPC-SC to ensure that your enterprise data stored in GCP can only be accessed by approved AI models within your secure perimeter, preventing exfiltration."
+
+
+Concept,AWS Paradigm,GCP Paradigm (The Shift),Architect's View for AI
+Storage,S3,Cloud Storage (GCS),"Used for staging raw documents, PDFs, and training data before it is ingested and chunked for your AI models."
+Relational / Vector,RDS (PostgreSQL with pgvector),AlloyDB / Cloud SQL (PostgreSQL),"AlloyDB is GCP's enterprise-grade PostgreSQL. It has native, highly optimized vector search capabilities. This is where you will store the embeddings (mathematical representations of your data) for your RAG architecture."
+
+Concept,AWS Paradigm,GCP Paradigm (The Shift),Architect's View for AI
+AI Platform,SageMaker (Custom ML) + Bedrock (Generative AI),Vertex AI: A completely unified platform.,"Vertex AI is the command center. You will use the Vertex AI Model Garden to access Foundation Models (like Gemini), use Vertex AI Vector Search for massive-scale RAG, and rely on its built-in MLOps pipelines to monitor your agents' performance."
+
+Enterprise Cloud Service (Paid),Your Local Enterprise Stack (Free),How We Will Use It
+GCP GKE (Kubernetes),Kind (Kubernetes in Docker) or Minikube,You will still write Kubernetes manifests and deploy your AI agents into a real cluster running locally.
+GCP AlloyDB / Cloud SQL,PostgreSQL + pgvector via Docker,You will spin up a local containerized Postgres database with the exact same vector search capabilities used in enterprise RAG pipelines.
+Vertex AI (LLMs),Ollama,"You will run models like Llama 3 or Mistral directly on your local hardware. Your code will interact with them via API, exactly as it would with Vertex AI."
+GCP IAM & Networking,Theoretical / Architecture Diagrams,"We will design the GCP VPCs, subnets, and Service Controls using tools like Draw.io or Excalidraw, and write the Terraform code to provision them (validating the code statically)."
+
+
+Enterprise Cloud Component,Local Component,Architect's Purpose
+GCP Cloud Storage,Local Volume Mount,"Staging ground for raw enterprise documents (PDFs, Markdown, text)."
+GCP GKE / Cloud Run,Kubernetes (Kind),The compute layer running your Python application and Agentic orchestration logic (LangChain).
+GCP AlloyDB / Vector Search,PostgreSQL + pgvector,The vector database storing the mathematical representations (embeddings) of your enterprise data.
+Vertex AI APIs,Ollama,"The local inference engine serving the Large Language Model (e.g., Llama 3) via REST API."
+
