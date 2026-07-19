@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     %% Styling definitions
     classDef compute fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
@@ -32,3 +33,4 @@ graph TD
     App ==> |D. Prompt + Context| LLM
     LLM ==> |E. Generated Response| App
     App ==> |F. Final Answer| User
+```
