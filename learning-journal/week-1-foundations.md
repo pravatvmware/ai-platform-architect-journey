@@ -32,3 +32,20 @@ I designed the conceptual architecture for a **Retrieval-Augmented Generation (R
 
 ---
 *Next Steps: Provisioning the local PostgreSQL + pgvector database via Docker Compose.*
+
+## 5. Hands-on Local Platform Implementation (Completed)
+
+To transition from pure architecture theory to concrete engineering, I successfully established the local data and inference infrastructure layers:
+
+### Data Layer: PostgreSQL + pgvector
+*   **Implementation:** Provisioned an enterprise-grade relational database running inside a Docker container via a custom `docker-compose.yml`.
+*   **Persistence:** Configured a named volume (`pgvector_enterprise_data`) to map data onto local host storage, ensuring database state survives container lifecycles (simulating GCP persistent storage volumes).
+*   **Vector Capability:** Executed the native database command to activate the `pgvector` database extension (`CREATE EXTENSION IF NOT EXISTS vector;`), transforming standard relational storage into a high-dimensional vector index space.
+
+### Inference Layer: Ollama Engine
+*   **Implementation:** Configured a local AI runtime engine to expose a standard REST API endpoint on port `11434`, successfully mirroring public cloud inference mechanics (Vertex AI APIs).
+*   **Model Deployment:** Pulled the foundational text embedding model `nomic-embed-text` directly into the local environment.
+*   **Verification:** Verified system integration using native PowerShell web requests (`Invoke-RestMethod`), successfully triggering the engine to transform unstructured text data into high-dimensional numerical arrays (embeddings).
+
+---
+*Next Steps: Building Phase 2: Writing the Python data ingestion script to parse local files, generate real embeddings via Ollama, and dynamically write them into the pgvector instance.*
