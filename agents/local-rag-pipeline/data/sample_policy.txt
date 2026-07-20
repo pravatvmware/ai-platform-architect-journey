@@ -1,0 +1,14 @@
+Enterprise Cloud & AI Security Policy
+
+1. Data Perimeter Controls
+All enterprise AI applications must operate within isolated network boundaries. 
+For cloud deployments, VPC Service Controls must be enabled to prevent data exfiltration. 
+No proprietary company data shall be sent to unverified public LLM endpoints.
+
+2. Vector Storage and Retrieval
+Vector databases hosting enterprise embeddings must enforce encryption at rest and in transit.
+Role-Based Access Control (RBAC) must restrict read access to database tables containing high-dimensional embeddings.
+
+3. Agentic Automation Guardrails
+Autonomous AI agents executing system commands or Infrastructure as Code modifications must operate under strict Service Account privileges.
+Human-in-the-loop approval is required for any automated action impacting production environments.
