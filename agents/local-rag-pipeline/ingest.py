@@ -7,10 +7,10 @@ from pgvector.psycopg2 import register_vector
 # --- Configuration Constants ---
 DB_CONFIG = {
     "dbname": "rag_database",
-    "user": "admin",
+    "user": "rag_admin",       # Updated user
     "password": "enterprise_secure_password",
-    "host": "127.0.0.1",  # Changed from 'localhost' to force IPv4
-    "port": "5432"
+    "host": "127.0.0.1",
+    "port": "5433"             # Updated port
 }
 
 OLLAMA_API_URL = "http://localhost:11434/api/embeddings"

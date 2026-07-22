@@ -6,14 +6,14 @@ services:
     container_name: enterprise-vector-db
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=enterprise_secure_password  # Change this in a real prod environment
+      - POSTGRES_USER=rag_admin
+      - POSTGRES_PASSWORD=enterprise_secure_password 
       - POSTGRES_DB=rag_database
     ports:
-      - "5432:5432"
+      - "5433:5432"  # Changed external port to 5433 to bypass local conflicts
     volumes:
-      - pgvector_data:/var/lib/postgresql/data
+      - pgvector_data_v2:/var/lib/postgresql/data # New volume name
 
 volumes:
-  pgvector_data:
-    name: pgvector_enterprise_data
+  pgvector_data_v2:
+    name: pgvector_enterprise_data_v2
