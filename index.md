@@ -22,7 +22,7 @@ This portfolio documents my hands-on transition and active engineering projects,
 *Designing a secure, zero-cost local environment mimicking GCP enterprise architecture.*
 * **Architecture:** Kubernetes (Kind), PostgreSQL + pgvector, Ollama (Local LLMs).
 * **Focus:** Deploying a secure data ingestion and retrieval pipeline entirely on local infrastructure, proving data privacy and system isolation before cloud deployment.
-* [View Architecture Diagrams](./architecture-diagrams/) | [View Infrastructure Code](./infrastructure/local-k8s/)
+* [View Architecture Diagrams](./architecture-diagrams/local-rag-architecture.md) | [View Infrastructure Code](./infrastructure/local-k8s/)
 
 ### 2. Autonomous GitHub Issue Triage Agent (Planned)
 *Orchestrating AI agents to automate platform engineering workflows.*
