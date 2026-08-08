@@ -23,3 +23,34 @@ By wrapping standard automation scripts inside an Agentic loop, infrastructure p
 
 ---
 *Next Phase: Preparing the architecture for GCP deployment and enforcing Enterprise Guardrails.*
+
+##
+The Stack So Far 
+
+## Core Infrastructure & Databases:
+
+   Docker: Container runtime engine.
+
+   PostgreSQL (pg16): Relational database.
+
+   pgvector: Postgres extension enabling high-dimensional vector storage and cosine similarity search.
+
+## AI Inference Engine:
+
+   Ollama: Local model serving engine (exposes cloud-like REST APIs locally).
+
+   Locally Hosted Models (Via Ollama):
+
+   nomic-embed-text: Specialized 768-dimension embedding model (used strictly for translating text to vectors).
+
+   llama3: Meta's 8-billion parameter instruct model (used for our Phase 2 RAG inference to answer questions).
+
+   llama3.1: Meta's updated model explicitly fine-tuned for Agentic workflows and tool execution (used in Phase 3).
+
+## Python Libraries (Orchestration & Data):
+
+   requests & psycopg2-binary: For API communication and database connections.
+
+   pgvector: Python client for handling vector data types in Postgres.
+
+   langchain-core & langchain-ollama: The abstraction layer used to bind Python functions to LLM reasoning loops.
