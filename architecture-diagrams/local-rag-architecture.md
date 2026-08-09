@@ -36,18 +36,5 @@ graph TD
     App ==> |F. Final Answer| User
 ```
 
-<!-- Load Mermaid rendering engine for GitHub Pages -->
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
 
-  // Convert GitHub Pages code blocks into Mermaid divs
-  document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('code.language-mermaid').forEach(el => {
-      const div = document.createElement('div');
-      div.className = 'mermaid';
-      div.textContent = el.textContent;
-      el.parentElement.replaceWith(div);
-    });
-  });
-</script>
+
