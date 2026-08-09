@@ -1,4 +1,3 @@
-# Enterprise AI Platform Architecture Portfolio Start
 
 **Bridging the gap between secure, scalable cloud infrastructure and Agentic AI.**
 
