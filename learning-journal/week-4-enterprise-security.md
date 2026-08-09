@@ -14,4 +14,25 @@
 ## 💡 Architect Key Takeaway
 Running AI in an enterprise requires treating model endpoints (`aiplatform.googleapis.com`) with the same perimeter security and network boundaries as database instances.
 
+## Core Security Pillars for Enterprise AI
+1. Perimeter Security (VPC Service Controls)
+Goal: Create an isolated security perimeter around Vertex AI, AlloyDB/Cloud SQL, and Cloud Storage buckets.
+
+Mechanism: Blocks API requests originating outside the perimeter—even with valid IAM credentials—preventing sensitive enterprise embeddings or prompts from being exfiltrated to unauthorized networks.
+
+2. Identity & Access Governance (Least Privilege & Workload Identity)
+Goal: Eliminate static service account keys in code repositories.
+
+Mechanism: Bind GKE Kubernetes Service Accounts (KSA) directly to GCP Identity and Access Management (IAM) Service Accounts using Workload Identity Federation.
+
+3. MLOps Telemetry & Auditability
+Goal: Maintain total visibility over AI Agent decision-making loops and API consumption.
+
+Mechanism: Capture prompt tokens, tool execution latency, and reasoning traces using Cloud Logging, Cloud Trace, and OpenTelemetry.
+
+4. Data Protection & Model Guardrails
+Goal: Protect vectors at rest and shield against prompt injection attacks.
+
+Mechanism: Enforce Customer-Managed Encryption Keys (CMEK) on vector storage and implement input/output sanitization filters before feeding text to the LLM.
+
 ---

@@ -39,3 +39,31 @@ This portfolio documents my hands-on transition and active engineering projects,
 
 ---
 *Documenting the journey from Cloud Architect to Enterprise AI Platform Architect.*
+
+## 3. Enterprise Guardrails & Security (Phase 4)
+
+*Transitioning local AI prototypes into a hardened GCP cloud architecture.*
+
+**Phase 4 Architectural Blueprint**
+```text
+                     +-------------------------------------------------------+
+                     |             GCP VPC Service Control Perimeter         |
+                     |                                                       |
+  [ Developer / ] -- | --> [ Identity-Aware Proxy ]                          |
+  [ CI/CD Pipeline]  |                 |                                     |
+                     |                 v                                     |
+                     |     [ Private GKE Cluster ]                           |
+                     |     (Agent Runtime Layer)                             |
+                     |         |               |                             |
+                     |  Workload Identity      | Private Google Access       |
+                     |         |               v                             |
+                     |         +-----> [ Vertex AI APIs ]                    |
+                     |         |       (Embedding / LLM Inference)           |
+                     |         |                                             |
+                     |         +-----> [ AlloyDB / Cloud SQL (pgvector) ]    |
+                     |                 (Encrypted Vector Store - CMEK)       |
+                     +-------------------------------------------------------+
+                                               |
+                                               v
+                                   [ Cloud Audit Logs & Trace ]
+                                     (MLOps Telemetry Layer)
