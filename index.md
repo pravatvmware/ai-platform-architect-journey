@@ -45,6 +45,7 @@ This portfolio documents my hands-on transition and active engineering projects,
 *Transitioning local AI prototypes into a hardened GCP cloud architecture.*
 
 **Phase 4 Architectural Blueprint**
+
 ```text
                      +-------------------------------------------------------+
                      |             GCP VPC Service Control Perimeter         |
