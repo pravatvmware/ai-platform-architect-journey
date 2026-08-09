@@ -87,3 +87,57 @@ sequenceDiagram
     Agent->>CloudOps: Log: Trace #1234 Completed Successfully
     Agent-->>User: Final Action Summary
 ```
+
+## 2 Option B: Workload Identity Federation (Zero-Trust Security)
+
+### Technical Overview
+In Google Kubernetes Engine (GKE), containers need permission to call GCP APIs (such as Vertex AI for model inference or Cloud SQL/AlloyDB for vector search).
+
+### The Legacy (Insecure) Anti-Pattern:
+Generating a static Google IAM Service Account JSON key, storing it as a Kubernetes Secret, and mounting it into the container.
+
+* **Risk:** Static keys can be leaked, committed to source control, or extracted if a pod is compromised.
+
+### The Workload Identity (Enterprise) Pattern:
+Workload Identity eliminates static credentials by establishing a trust relationship between Kubernetes Service Accounts (KSA) and Google Cloud IAM Service Accounts (GSA).
+
+* 1. A Kubernetes Pod runs under a specific KSA.
+
+* 2. When calling GCP services, the pod exchanges its short-lived Kubernetes token for a temporary GCP OAuth2 Access Token via the Workload Identity Pool.
+
+* 3. Tokens automatically expire after 1 hour, enforcing Least Privilege and zero static credential footprint.
+
+### Workload Identity Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Pod as GKE Pod (Python Agent Container)
+    participant KSA as Kubernetes Service Account (KSA)
+    participant WID as GCP Workload Identity Pool
+    participant GSA as Google IAM Service Account (GSA)
+    participant Vertex as Vertex AI API
+
+    Pod->>KSA: Request local Service Account Token
+    KSA-->>Pod: Return OIDC Token
+    
+    Pod->>WID: Token Exchange: Present OIDC Token
+    WID->>GSA: Validate KSA binding against GSA IAM Policy
+    
+    GSA-->>WID: Generate short-lived GCP Access Token
+    WID-->>Pod: Return Temporary Bearer Token (Valid for 1 Hour)
+    
+    Pod->>Vertex: API Request + Bearer Token
+    Vertex-->>Pod: 200 OK (Model Inference Payload)
+    
+    note over Pod, Vertex: Zero static JSON keys stored or mounted!
+```
+
+ ### Key Takeaways for Architecture Reviews
+ 
+ Pillar                     Focus Area              Core Bene
+ fitMLOps Telemetry         Observability & Cost    Streams token counts, tool execution latency, and agent decision paths directly to Cloud Logging and Trace.
+ 
+ Workload Identity          IAM Security            Eliminates static Service Account JSON keys by dynamically binding Kubernetes pods to GCP IAM roles.
+
+ 
