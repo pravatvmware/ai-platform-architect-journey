@@ -133,11 +133,28 @@ sequenceDiagram
     note over Pod, Vertex: Zero static JSON keys stored or mounted!
 ```
 
- ### Key Takeaways for Architecture Reviews
- 
- Pillar                     Focus Area              Core Bene
- fitMLOps Telemetry         Observability & Cost    Streams token counts, tool execution latency, and agent decision paths directly to Cloud Logging and Trace.
- 
- Workload Identity          IAM Security            Eliminates static Service Account JSON keys by dynamically binding Kubernetes pods to GCP IAM roles.
+## Key Takeaways for Architecture Reviews
+
+| Pillar | Focus Area | Core Benefit |
+| :--- | :--- | :--- |
+| **MLOps Telemetry** | Observability & Cost | Streams token counts, tool execution latency, and agent decision paths directly to Cloud Logging and Trace. |
+| **Workload Identity** | IAM Security | Eliminates static Service Account JSON keys by dynamically binding Kubernetes pods to GCP IAM roles. |
+
+
+<!-- Load Mermaid rendering engine for GitHub Pages -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+
+  // Convert GitHub Pages code blocks into Mermaid divs
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('code.language-mermaid').forEach(el => {
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = el.textContent;
+      el.parentElement.replaceWith(div);
+    });
+  });
+</script>
 
  
