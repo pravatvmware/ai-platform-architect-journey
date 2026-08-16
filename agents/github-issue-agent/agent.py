@@ -3,6 +3,9 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_ollama import ChatOllama
 import json
 
+from telemetry import MLOpsTelemetryHandler
+import uuid
+
 # --- 1. Define the Enterprise Tools ---
 # The @tool decorator tells LangChain to extract the function name, 
 # arguments, and docstring to teach the LLM how to use it.
@@ -43,14 +46,19 @@ def draft_pull_request(repo: str, branch: str, fix_description: str) -> str:
 # --- 2. Initialize the AI Agent ---
 def run_autonomous_agent(user_prompt: str):
     print("🚀 Initializing Autonomous Infrastructure Agent...\n")
+
+    # 1. Generate a unique Trace ID for this specific run
+    run_trace_id = f"trace-{uuid.uuid4().hex[:8]}"
+    telemetry = MLOpsTelemetryHandler(trace_id=run_trace_id)
     
-    # Initialize the specific model capable of tool calling
+    # 2. Attach the telemetry handler to the LLM via the 'callbacks' array
     llm = ChatOllama(
         model="llama3.1",
         base_url="http://localhost:11434",
-        temperature=0
-    )
-    
+        temperature=0,
+        callbacks=[telemetry] # <--- THE WIRETAP IS NOW ACTIVE
+    )    
+        
     # Bind the tools to the LLM so it knows they exist
     tools = [fetch_github_issue, query_infrastructure_codebase, draft_pull_request]
     llm_with_tools = llm.bind_tools(tools)
