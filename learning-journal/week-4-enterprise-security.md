@@ -133,8 +133,146 @@ sequenceDiagram
     note over Pod, Vertex: Zero static JSON keys stored or mounted!
 ```
 
-## Key Takeaways for Architecture Reviews
+## 🛠️ Step-by-Step Implementation Guide
 
+### Option A: Implementing MLOps Telemetry
+
+**1. Install Dependencies**
+```powershell
+pip install google-cloud-logging
+```
+**2. Create the Telemetry Interceptor
+Created agents/github-issue-agent/telemetry.py to stream logs without hardcoding them into the tools:
+```
+import time
+from langchain_core.callbacks import BaseCallbackHandler
+from google.cloud import logging as gcp_logging
+
+class MLOpsTelemetryHandler(BaseCallbackHandler):
+    def __init__(self, trace_id: str):
+        self.trace_id = trace_id
+        self.tool_start_times = {}
+        try:
+            client = gcp_logging.Client()
+            self.logger = client.logger("ai-agent-telemetry")
+            self.use_gcp = True
+        except Exception:
+            self.use_gcp = False
+
+    def log_event(self, event_name: str, payload: dict):
+        payload["trace_id"] = self.trace_id
+        if self.use_gcp:
+            self.logger.log_struct(payload, severity="INFO")
+        else:
+            print(f"\n[TELEMETRY] {event_name.upper()} | {payload}")
+
+    def on_llm_start(self, serialized: dict, prompts: list, **kwargs):
+        self.log_event("llm_start", {"action": "Reasoning Loop Started", "model": serialized.get("name")})
+
+    def on_tool_start(self, serialized: dict, input_str: str, **kwargs):
+        tool_name = serialized.get("name", "unknown_tool")
+        self.tool_start_times[tool_name] = time.time()
+        self.log_event("tool_start", {"action": "Tool Executed", "tool_name": tool_name})
+
+    def on_tool_end(self, output: str, name: str, **kwargs):
+        latency = round(time.time() - self.tool_start_times.get(name, time.time()), 3)
+        self.log_event("tool_end", {"action": "Tool Completed", "tool_name": name, "latency_seconds": latency})
+```
+**3. Wire the Interceptor to the Agent
+```
+Updated agents/github-issue-agent/agent.py to use the callback:
+
+from telemetry import MLOpsTelemetryHandler
+import uuid
+
+# Inside run_autonomous_agent():
+run_trace_id = f"trace-{uuid.uuid4().hex[:8]}"
+telemetry = MLOpsTelemetryHandler(trace_id=run_trace_id)
+
+llm = ChatOllama(
+    model="llama3.1",
+    base_url="http://localhost:11434",
+    temperature=0,
+    callbacks=[telemetry] # Activates the telemetry wiretap
+)
+```
+### Option B: Implementing Workload Identity (GKE)
+**1. Infrastructure as Code (GCP Side)
+```
+Created infrastructure/gcp-security/workload_identity.tf to establish trust:
+
+resource "google_service_account" "ai_agent_gsa" {
+  account_id   = "github-issue-agent-sa"
+  display_name = "GitHub Issue Agent Service Account"
+}
+
+resource "google_project_iam_member" "agent_vertex_ai_user" {
+  project = var.project_id
+  role    = "roles/aiplatform.user"
+  member  = "serviceAccount:${google_service_account.ai_agent_gsa.email}"
+}
+
+# Bind the Kubernetes Service Account to the Google Service Account
+resource "google_service_account_iam_binding" "workload_identity_binding" {
+  service_account_id = google_service_account.ai_agent_gsa.name
+  role               = "roles/iam.workloadIdentityUser"
+  members = [
+    "serviceAccount:${var.project_id}.svc.id.goog[platform-agents/ai-agent-ksa]"
+  ]
+}
+
+resource "google_service_account" "ai_agent_gsa" {
+  account_id   = "github-issue-agent-sa"
+  display_name = "GitHub Issue Agent Service Account"
+}
+
+resource "google_project_iam_member" "agent_vertex_ai_user" {
+  project = var.project_id
+  role    = "roles/aiplatform.user"
+  member  = "serviceAccount:${google_service_account.ai_agent_gsa.email}"
+}
+
+# Bind the Kubernetes Service Account to the Google Service Account
+resource "google_service_account_iam_binding" "workload_identity_binding" {
+  service_account_id = google_service_account.ai_agent_gsa.name
+  role               = "roles/iam.workloadIdentityUser"
+  members = [
+    "serviceAccount:${var.project_id}.svc.id.goog[platform-agents/ai-agent-ksa]"
+  ]
+}
+```
+**2. Kubernetes Manifest (Cluster Side)
+```
+Created infrastructure/k8s-manifests/ai-agent-sa.yaml to annotate the KSA:
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ai-agent-ksa
+  namespace: platform-agents
+  annotations:
+    iam.gke.io/gcp-service-account: "github-issue-agent-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com"
+```
+**3. Agent Pod Deployment
+```
+Attached the secure KSA to the agent deployment:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-issue-agent
+  namespace: platform-agents
+spec:
+  template:
+    spec:
+      serviceAccountName: ai-agent-ksa # Zero-Trust Security Enabled
+      containers:
+      - name: agent
+        image: your-registry/github-issue-agent:latest
+
+```
+## Key Takeaways for Architecture Reviews
+```
 | Pillar | Focus Area | Core Benefit |
 | :--- | :--- | :--- |
 | **MLOps Telemetry** | Observability & Cost | Streams token counts, tool execution latency, and agent decision paths directly to Cloud Logging and Trace. |
@@ -156,5 +294,5 @@ sequenceDiagram
     });
   });
 </script>
-
+```
  
