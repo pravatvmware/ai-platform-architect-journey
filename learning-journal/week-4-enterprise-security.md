@@ -277,7 +277,7 @@ spec:
 | :--- | :--- | :--- |
 | **MLOps Telemetry** | Observability & Cost | Streams token counts, tool execution latency, and agent decision paths directly to Cloud Logging and Trace. |
 | **Workload Identity** | IAM Security | Eliminates static Service Account JSON keys by dynamically binding Kubernetes pods to GCP IAM roles. |
-
+```
 
 <!-- Load Mermaid rendering engine for GitHub Pages -->
 <script type="module">
