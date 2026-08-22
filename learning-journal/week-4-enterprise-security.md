@@ -272,13 +272,13 @@ spec:
 
 ```
 ## Key Takeaways for Architecture Reviews
-```
+
 | Pillar | Focus Area | Core Benefit |
 | :--- | :--- | :--- |
 | **MLOps Telemetry** | Observability & Cost | Streams token counts, tool execution latency, and agent decision paths directly to Cloud Logging and Trace. |
 | **Workload Identity** | IAM Security | Eliminates static Service Account JSON keys by dynamically binding Kubernetes pods to GCP IAM roles. |
-```
 
+```
 <!-- Load Mermaid rendering engine for GitHub Pages -->
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
