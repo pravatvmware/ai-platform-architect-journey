@@ -141,7 +141,7 @@ sequenceDiagram
 ```powershell
 pip install google-cloud-logging
 ```
-**2. Create the Telemetry Interceptor
+**2. Create the Telemetry Interceptor**
 Created agents/github-issue-agent/telemetry.py to stream logs without hardcoding them into the tools:
 ```
 import time
@@ -178,7 +178,7 @@ class MLOpsTelemetryHandler(BaseCallbackHandler):
         latency = round(time.time() - self.tool_start_times.get(name, time.time()), 3)
         self.log_event("tool_end", {"action": "Tool Completed", "tool_name": name, "latency_seconds": latency})
 ```
-**3. Wire the Interceptor to the Agent
+**3. Wire the Interceptor to the Agent**
 ```
 Updated agents/github-issue-agent/agent.py to use the callback:
 
@@ -197,7 +197,7 @@ llm = ChatOllama(
 )
 ```
 ### Option B: Implementing Workload Identity (GKE)
-**1. Infrastructure as Code (GCP Side)
+**1. Infrastructure as Code (GCP Side)**
 ```
 Created infrastructure/gcp-security/workload_identity.tf to establish trust:
 
@@ -241,7 +241,7 @@ resource "google_service_account_iam_binding" "workload_identity_binding" {
   ]
 }
 ```
-**2. Kubernetes Manifest (Cluster Side)
+**2. Kubernetes Manifest (Cluster Side)**
 ```
 Created infrastructure/k8s-manifests/ai-agent-sa.yaml to annotate the KSA:
 
@@ -253,7 +253,7 @@ metadata:
   annotations:
     iam.gke.io/gcp-service-account: "github-issue-agent-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com"
 ```
-**3. Agent Pod Deployment
+**3. Agent Pod Deployment**
 ```
 Attached the secure KSA to the agent deployment:
 
