@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ai-agent-ksa
+  namespace: platform-agents
+  annotations:
+    # This annotation tells GKE to exchange the Kubernetes token for a GCP token
+    iam.gke.io/gcp-service-account: "github-issue-agent-sa@YOUR_PROJECT_ID.iam.gserviceaccount.com"
