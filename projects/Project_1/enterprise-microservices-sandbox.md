@@ -1,4 +1,4 @@
-# Enterprise Microservices Sandbox: Istio, Online Boutique & AI Agents
+# Enterprise Microservices Sandbox: Istio, Online Boutique and AI Agents
 
 **Goal:** Evolve the architecture from standalone AI scripts to a secure, monitored microservices ecosystem. This runbook details how to deploy a local Kubernetes cluster running the Google Cloud Online Boutique microservices demo, secured by an Istio Service Mesh, and integrated with both a Gemini Shopping Assistant and a custom Autonomous AI Agent.
 
