@@ -19,8 +19,12 @@ Deploy the Istio demo profile and configure the default namespace for automatic 
 ```Bash
 istioctl install --set profile=demo -y
 ```
-# Enable automatic Envoy proxy injection for all new pods
+
+Enable automatic Envoy proxy injection for all new pods
+
+```
 kubectl label namespace default istio-injection=enabled
+```
 
 ## 🛍️ Phase 2: Deploy Online Boutique (with Istio + AI Assistant)
 
@@ -138,6 +142,3 @@ istioctl dashboard kiali
 ```
 ## Architectural Verification:
 In Kiali (Graph > Namespace: default > Display: Traffic Animation & Security), you will see real-time connections between the frontend and the shopping-assistant. The presence of the lock icon confirms that Istio has automatically upgraded local pod-to-pod communication to encrypted Mutual TLS (mTLS).
-
-
-Once you have this committed to your repository, let me know, and we can start running the commands to actually build the environment on your machine!
