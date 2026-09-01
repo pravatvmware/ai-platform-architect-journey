@@ -61,6 +61,79 @@ kubectl apply -k .
 kubectl get pods -w
 ```
 
+### Troubleshooting & Incident Ledger
+
+The shoppingassistantservice pod failed to reach a 2/2 Running state out of the box. Below is the chronological ledger of the incidents, root causes, and applied Platform Engineering fixes.
+
+#### Incident 1: Kubernetes OOMKilled
+Symptom: kubectl get pods showed the shoppingassistantservice pod crashing with OOMKilled (Exit Code 137).
+
+Root Cause: The underlying Docker Desktop WSL 2 backend lacked sufficient dynamic memory allocation to host the Python/Gemini runtime alongside the rest of the cluster.
+
+Resolution: Injected a .wslconfig file into the Windows user profile to dedicate resources, and restarted the WSL engine.
+
+```
+PowerShell
+Set-Content -Path "$env:USERPROFILE\.wslconfig" -Value "[wsl2]`nmemory=6GB`nprocessors=4`nswap=2GB"
+wsl --shutdown
+```
+
+#### Incident 2: Python 3.14 Dependency Crash (CrashLoopBackOff)
+Symptom: Pod entered a crash loop. Container logs revealed ModuleNotFoundError: No module named 'aiohttp' and Pydantic v1 compatibility warnings.
+
+Root Cause: The original Dockerfile used a floating Python tag that automatically pulled 3.14, which broke LangChain dependencies.
+
+Resolution:
+
+Pinned the Dockerfile base image to FROM python:3.11-slim.
+
+Updated the multi-stage copy path to /usr/local/lib/python3.11/.
+
+Appended aiohttp to requirements.txt.
+
+#### Incident 3: Cloud Credential Failures (GCP Secret Manager & AlloyDB)
+Symptom: Logs revealed google.auth.exceptions.DefaultCredentialsError.
+
+Root Cause: The application was hardcoded to authenticate with Google Cloud Secret Manager (to fetch a database password) and Google Cloud AlloyDB (for vector search). Our local Kind sandbox lacked GCP Application Default Credentials.
+
+Resolution: Patched the source code (shoppingassistantservice.py) to mock cloud dependencies for local execution:
+
+Commented out the secretmanager_v1 client and injected the database password via local OS environment variables.
+
+Commented out AlloyDBEngine and replaced the real database connection with a custom MockVectorStore and MockRetriever class that safely returned empty arrays for RAG queries.
+
+#### Incident 4: 500 Internal Server Error (KeyError: 'image')
+Symptom: The pod reached 2/2 Running, but sending a text-only "Hello" message in the frontend chat resulted in a silent UI failure and a 500 error in the pod logs (KeyError: 'image').
+
+Root Cause: The Python API endpoint was rigidly expecting an image payload in every JSON request and lacked fault tolerance for text-only messages.
+
+Resolution: Refactored the talkToGemini route to handle the image dynamically using .get('image').
+
+Python
+content_list = [{"type": "text", "text": "Your prompt..."}]
+image_data = request.json.get('image')
+if image_data:
+    content_list.append({"type": "image_url", "image_url": image_data})
+message = HumanMessage(content=content_list)
+Incident 5: Google API 400 INVALID_ARGUMENT (Hardcoded Override)
+Symptom: LangChain successfully compiled the request but the Gemini API rejected it with API key not valid.
+
+Root Cause: The base Kubernetes Deployment manifest had GOOGLE_API_KEY=GOOGLE_API_KEY_VAL explicitly hardcoded in the container spec. This hardcoded value took precedence over the valid credentials injected via our gemini-api-key Secret.
+
+Resolution: Forcefully overwrote the specific environment variable directly in the deployment using kubectl set env, which bypassed the manifest hardcode and triggered a rolling restart.
+
+```
+PowerShell
+kubectl set env deployment/shoppingassistantservice GOOGLE_API_KEY="<ACTUAL_VALID_KEY>"
+🔄 Standard Rebuild Cycle Used
+For every source code or Dockerfile patch above, we used the following local deployment loop to bypass external registries:
+
+PowerShell
+docker build -t shoppingassistantservice:local ./src/shoppingassistantservice
+kind load docker-image shoppingassistantservice:local --name enterprise-sandbox
+kubectl delete pod -l app=shoppingassistantservice
+```
+
 ## 🤖 Phase 3: Deploy the Autonomous AI Agent
 Integrate the custom Python GitHub Issue Agent into the service mesh alongside the application workloads.
 
