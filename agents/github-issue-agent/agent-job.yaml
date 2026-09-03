@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: github-issue-agent-job
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"  # PLATFORM ENGINEER FIX: Do not inject Envoy proxy
+    spec:
+      containers:
+      - name: agent
+        image: github-issue-agent:v1
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Never

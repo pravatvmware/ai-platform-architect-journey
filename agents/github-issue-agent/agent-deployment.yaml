@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-issue-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: github-issue-agent
+  template:
+    metadata:
+      labels:
+        app: github-issue-agent
+    spec:
+      containers:
+      - name: agent
+        image: github-issue-agent:v1
+        imagePullPolicy: IfNotPresent

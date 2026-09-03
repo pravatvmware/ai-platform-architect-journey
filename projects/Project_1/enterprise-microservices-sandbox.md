@@ -187,6 +187,53 @@ Bash
 kubectl apply -f agent-deployment.yaml
 ```
 
+## Phase 3 Troubleshooting & Incident Ledger
+The agent integration revealed several containerization and orchestration challenges. Below are the incidents and the applied Platform Engineering fixes.
+
+### Incident 1: Missing Python Dependency
+Symptom: The container crashed immediately with ModuleNotFoundError: No module named 'google'.
+
+Root Cause: The google-cloud-logging package (used for MLOps telemetry) was imported in the script but missing from requirements.txt.
+
+Resolution: Appended google-cloud-logging to the requirements file and rebuilt the Docker image.
+
+### Incident 2: Local LLM Network Routing (Connection Refused)
+Symptom: The agent logged httpx.ConnectError: [Errno 111] Connection refused when trying to connect to the Ollama LLM.
+
+Root Cause: The Python script defaulted to http://localhost:11434. Inside the Kubernetes pod, localhost refers to the container itself, not the Windows host machine where Ollama was actually running.
+
+Resolution:
+
+Configured the Windows host environment variable OLLAMA_HOST=0.0.0.0 to accept external traffic.
+
+Patched the Python code to route traffic out of the pod directly to the Docker host network using Docker's internal DNS:
+
+```
+Python
+ollama_url = os.environ.get("OLLAMA_BASE_URL", "[http://host.docker.internal:11434](http://host.docker.internal:11434)")
+llm = ChatOllama(model="llama3", base_url=ollama_url)
+```
+
+### Incident 3: Kubernetes Lifecycle Mismatch (CrashLoopBackOff)
+Symptom: The agent successfully executed its task, but Kubernetes repeatedly marked the pod with CrashLoopBackOff.
+
+Root Cause: The agent was initially deployed using a Kubernetes Deployment object. Deployments expect container processes to run indefinitely (like a web server). When the Python script finished and exited cleanly, the Deployment controller viewed it as a failure and forcefully restarted it.
+
+Resolution: Deleted the Deployment and converted the manifest to a Kubernetes Job (kind: Job), which gracefully handles scripts designed to run once and terminate.
+
+### Incident 4: Istio Sidecar Zombie Pod (1/2 NotReady)
+Symptom: After converting to a Job, the Python script ran perfectly, but the pod hung in a 1/2 NotReady state instead of transitioning to Completed.
+
+Root Cause: The Istio control plane automatically injected an Envoy proxy sidecar (container 2) into the pod. Envoy is a background web server that runs indefinitely. When the Python agent (container 1) finished, the Envoy proxy stayed alive, preventing the pod from fully terminating.
+
+Resolution: Added a pod annotation to explicitly instruct Istio to ignore this specific batch job, preventing the sidecar injection:
+
+```
+YAML
+annotations:
+  sidecar.istio.io/inject: "false"
+```
+
 ## 📊 Phase 4: Service Mesh Telemetry & Observability (Kiali)
 To visualize real-time traffic flow, latency, and mTLS encryption between the microservices and the AI pods, we deploy Prometheus and Kiali.
 

@@ -6,6 +6,8 @@ import json
 from telemetry import MLOpsTelemetryHandler
 import uuid
 
+import os
+
 # --- 1. Define the Enterprise Tools ---
 # The @tool decorator tells LangChain to extract the function name, 
 # arguments, and docstring to teach the LLM how to use it.
@@ -50,14 +52,18 @@ def run_autonomous_agent(user_prompt: str):
     # 1. Generate a unique Trace ID for this specific run
     run_trace_id = f"trace-{uuid.uuid4().hex[:8]}"
     telemetry = MLOpsTelemetryHandler(trace_id=run_trace_id)
-    
+
+    # PLATFORM ENGINEER FIX: Route traffic out of the pod to the Windows host
+    ollama_url = os.environ.get("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
+
     # 2. Attach the telemetry handler to the LLM via the 'callbacks' array
     llm = ChatOllama(
         model="llama3.1",
-        base_url="http://localhost:11434",
+        base_url=ollama_url,
+        #base_url="http://localhost:11434",
         temperature=0,
         callbacks=[telemetry] # <--- THE WIRETAP IS NOW ACTIVE
-    )    
+    )  
         
     # Bind the tools to the LLM so it knows they exist
     tools = [fetch_github_issue, query_infrastructure_codebase, draft_pull_request]
@@ -107,3 +113,8 @@ def run_autonomous_agent(user_prompt: str):
 
 if __name__ == "__main__":
     run_autonomous_agent("Please investigate and resolve GitHub Issue #42 in the enterprise-cloud repo.")
+
+    # PLATFORM ENGINEER FIX: Prevent container exit in Kubernetes Deployment
+    #print("Agent task execution completed. Keeping container alive...")
+    #while True:
+        #time.sleep(3600)
