@@ -240,8 +240,49 @@ To visualize real-time traffic flow, latency, and mTLS encryption between the mi
 ### 1. Install Telemetry Add-ons
 ```
 Bash
-kubectl apply -f [https://raw.githubusercontent.com/istio/istio/release-1.21/samples/addons/prometheus.yaml](https://raw.githubusercontent.com/istio/istio/release-1.21/samples/addons/prometheus.yaml)
-kubectl apply -f [https://raw.githubusercontent.com/istio/istio/release-1.21/samples/addons/kiali.yaml](https://raw.githubusercontent.com/istio/istio/release-1.21/samples/addons/kiali.yaml)
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.21/samples/addons/prometheus.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.21/samples/addons/kiali.yaml
+
+kubectl get pods -A
+NAMESPACE            NAME                                                       READY   STATUS      RESTARTS       AGE
+default              adservice-5c94ff7675-6r4bm                                 2/2     Running     4 (5h7m ago)   4d21h
+default              cartservice-55fbd575cb-ks2hj                               2/2     Running     4 (5h7m ago)   4d21h
+default              checkoutservice-ffdcf78f5-ms7fh                            2/2     Running     4 (5h7m ago)   4d21h
+default              currencyservice-8557546f8c-v5fbg                           2/2     Running     4 (5h7m ago)   4d21h
+default              emailservice-5c5647c9df-fbx4c                              2/2     Running     4 (5h7m ago)   4d21h
+default              frontend-546567b64c-hbbdg                                  2/2     Running     4 (5h7m ago)   4d21h
+default              github-issue-agent-job-njbtv                               0/1     Completed   0              84m
+default              istio-gateway-istio-574fbd4f75-fb5m9                       1/1     Running     4 (5h7m ago)   4d22h
+default              loadgenerator-6b64cc6ff7-5hwwc                             2/2     Running     4 (5h7m ago)   4d21h
+default              paymentservice-678fc785b9-r2spm                            2/2     Running     4 (5h7m ago)   4d21h
+default              productcatalogservice-bd67657c7-lrk94                      2/2     Running     4 (5h7m ago)   4d21h
+default              recommendationservice-6b68b7c745-xxc59                     2/2     Running     4 (5h7m ago)   4d21h
+default              redis-cart-c4fc658fb-m4fbf                                 2/2     Running     4 (5h7m ago)   4d22h
+default              shippingservice-8558dc8485-dr57f                           2/2     Running     4 (5h7m ago)   4d21h
+default              shoppingassistantservice-5dfdfb67bc-bgq2r                  2/2     Running     4 (5h7m ago)   3d23h
+istio-system         istio-egressgateway-55f7bd68d6-8hvnd                       1/1     Running     3 (5h7m ago)   9d
+istio-system         istio-ingressgateway-785ccc95f6-j2zlb                      1/1     Running     3 (5h7m ago)   9d
+istio-system         istiod-5d6b76d878-fj7lg                                    1/1     Running     2 (5h7m ago)   4d22h
+istio-system         kiali-766c755f6f-scvc6                                     1/1     Running     0              3m55s
+istio-system         prometheus-69d885765b-cfqq8                                2/2     Running     0              4m17s
+kube-system          coredns-668d6bf9bc-hd49d                                   1/1     Running     3 (5h7m ago)   9d
+kube-system          coredns-668d6bf9bc-p7qt5                                   1/1     Running     3 (5h7m ago)   9d
+kube-system          etcd-enterprise-sandbox-control-plane                      1/1     Running     3 (5h7m ago)   9d
+kube-system          kindnet-ffgmx                                              1/1     Running     3 (5h7m ago)   9d
+kube-system          kube-apiserver-enterprise-sandbox-control-plane            1/1     Running     3 (5h7m ago)   9d
+kube-system          kube-controller-manager-enterprise-sandbox-control-plane   1/1     Running     3 (5h7m ago)   9d
+kube-system          kube-proxy-jd28s                                           1/1     Running     3 (5h7m ago)   9d
+kube-system          kube-scheduler-enterprise-sandbox-control-plane            1/1     Running     3 (5h7m ago)   9d
+local-path-storage   local-path-provisioner-58cc7856b6-44f5f                    1/1     Running     6 (5h7m ago)   9d
+
+```
+
+Verify the telemetry pods are spinning up in the Istio namespace:
+
+```
+PowerShell
+kubectl get pods -n istio-system -w
 ```
 
 ### 2. Generate Application Traffic
