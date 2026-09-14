@@ -23,7 +23,8 @@ In the first half of Phase 2, we replaced the mocked reasoning engine with a liv
 ### 📝 Code State Snapshot
 
 **The Async Node Pattern (`agent/nodes.py`):**
-```python
+```
+python
 async def draft_code(state: AgentState) -> Dict[str, Any]:
     print("--- Node: Drafting Code Fix ---")
     
@@ -44,7 +45,7 @@ async def draft_code(state: AgentState) -> Dict[str, Any]:
     }
     
     return {"pr_draft": draft, "messages": [response]}
-
+```
 
 ### Execution Verification:
 Successfully triggered the async FastAPI endpoint (POST /agent/issues/resolve). The local Llama 3.1 model successfully parsed the mocked codebase context and generated syntactically correct Terraform HCL code to resolve a VPC-SC violation.
