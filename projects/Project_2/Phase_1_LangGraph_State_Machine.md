@@ -96,4 +96,34 @@ Click Execute!
 --- Node: Submitting Pull Request ---
 INFO:     127.0.0.1:53775 - "POST /agent/issues/resolve HTTP/1.1" 200 OK
 ```  
+
+#### Commands:
+
+```
+PowerShell
+kubectl get pods
+ollama run llama3.1
+python main.py
+```
+
+Open your browser and navigate to the built-in FastAPI Swagger UI: http://localhost:8000/docs
+In the Request Body, enter some mock data:
+```
+JSON
+{
+  "issue_id": 42,
+  "issue_description": "VPC-SC violation on subnet-a"
+}
+```
+
+Click Execute!
+
+--- API Triggered: Resolving Issue #42 ---
+--- Node: Analyzing Issue #42 ---
+--- Node: Drafting Code Fix ---
+--- Node: Human Approval Check ---
+--- Node: Submitting Pull Request ---
+INFO:     127.0.0.1:53775 - "POST /agent/issues/resolve HTTP/1.1" 200 OK
+
+
 ### Status: Phase 1 Complete. The state machine is ready to be connected to live LLMs and Model Context Protocol (MCP) tools.
