@@ -32,7 +32,8 @@ async def resolve_issue(request: IssueRequest):
     
     # 2. Execute the LangGraph workflow
     # Note: .invoke() runs the entire graph from START to END
-    final_state = agent_workflow.invoke(initial_state)
+    # 2. Execute the LangGraph workflow asynchronously
+    final_state = await agent_workflow.ainvoke(initial_state)
     
     # 3. Extract the final response from the agent's memory
     final_ai_message = final_state["messages"][-1].content
