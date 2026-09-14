@@ -58,6 +58,36 @@ async def resolve_issue(request: IssueRequest):
 #### 3. Execution Verification
 Successfully triggered the REST API via the Swagger UI (http://localhost:8000/docs). The LangGraph router successfully guided the state through the mocked nodes in the correct sequence:
 
+
+##### Let's Test It!
+Make sure you stop the previous FastAPI server if it's still running (Ctrl+C).
+
+Restart the server with:
+
+```
+PowerShell
+python main.py
+```
+
+Open your browser and navigate to the built-in FastAPI Swagger UI:
+http://localhost:8000/docs
+
+Click on the POST /agent/issues/resolve endpoint.
+
+Click "Try it out".
+
+In the Request Body, enter some mock data:
+
+```
+JSON
+{
+  "issue_id": 42,
+  "issue_description": "VPC-SC violation on subnet-a"
+}
+```
+Click Execute!
+
+
 ```
 --- API Triggered: Resolving Issue #42 ---
 --- Node: Analyzing Issue #42 ---
