@@ -1,4 +1,4 @@
-## 🏗️ Phase 1 Execution: LangGraph State Machine & API Delivery
+## 🏗️ Phase 1 Execution: LangGraph State Machine and API Delivery
 
 In Phase 1, we successfully transitioned the agent from a linear, single-execution script into a **Directed Cyclic Graph (DCG)** exposed as an enterprise REST API.
 
