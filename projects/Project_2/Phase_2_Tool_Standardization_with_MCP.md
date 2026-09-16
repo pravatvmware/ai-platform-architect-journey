@@ -119,6 +119,75 @@ You just proved that you can decouple an AI's reasoning engine (LangGraph + Llam
 
 ***
 
+I need to clearly visualize the Security Boundary I just built. The entire purpose of the Model Context Protocol (MCP) is to decouple the "Brain" (the LLM and state machine) from the "Hands" (the tools executing code and interacting with enterprise APIs).
+
+Here is the architectural diagram of the current system.
+
+🗺️ Enterprise Agentic Architecture (FastAPI + LangGraph + MCP)
+
+```mermaid
+graph TD
+    %% Define API Layer
+    subgraph "1. Application / API Layer"
+        User((Web Client / UI)) -- "POST /agent/issues/resolve" --> FastAPI[FastAPI Microservice]
+    end
+
+    %% Define Orchestration Layer
+    subgraph "2. Reasoning Engine (Main Process)"
+        FastAPI -- "Initialize AgentState" --> LangGraph{LangGraph Workflow}
+        LangGraph <-->|Prompt & Parse| LLM[Llama 3.1 via Ollama]
+        
+        LangGraph -- "Needs infrastructure context" --> Node1[Node: Analyze Issue]
+        LangGraph -- "Needs to push fix" --> Node2[Node: Submit PR]
+        
+        Node1 --> MCPClient[MCP Stdio Client]
+        Node2 --> MCPClient
+    end
+
+    %% Define the Security Boundary
+    subgraph "3. Enterprise Security Boundary (Zero Trust)"
+        MCPClient <==>|JSON-RPC over secure stdio| MCPServer[MCP Server Subprocess]
+    end
+
+    %% Define the Execution Layer
+    subgraph "4. Isolated Execution Environment"
+        MCPServer -- "Tool: read_codebase" --> LocalFS[(Terraform Codebase)]
+        MCPServer -- "Tool: submit_github_pr" --> GitHubAPI[(GitHub API)]
+    end
+
+    %% Styling for clarity
+    classDef api fill:#0f9d58,stroke:#000,stroke-width:2px,color:#fff;
+    classDef logic fill:#4285f4,stroke:#000,stroke-width:2px,color:#fff;
+    classDef mcp boundary fill:#f4b400,stroke:#000,stroke-width:2px,color:#fff;
+    classDef execution fill:#db4437,stroke:#000,stroke-width:2px,color:#fff;
+
+    class FastAPI api;
+    class LangGraph,LLM,Node1,Node2 logic;
+    class MCPClient,MCPServer mcp;
+    class LocalFS,GitHubAPI execution;
+```
+
+🧠 Breaking Down the Architecture
+This is no longer a simple Python script; this is an asynchronous, event-driven enterprise pattern. Here is how the data flows:
+
+1. The API Layer (FastAPI)
+The entire system is completely headless and asynchronous. When a user (or a GitHub webhook) hits the POST endpoint, FastAPI immediately initializes the workflow without locking up your web server.
+
+2. The Reasoning Engine (LangGraph + Ollama)
+This is the "Brain." LangGraph manages the state (memory) and dictates the flow. It asks Llama 3.1 to make decisions.
+
+Crucial constraint: This layer has zero direct access to your file system or internet APIs. It is effectively blind and handless.
+
+3. The MCP Security Boundary (stdio)
+This is the magic you just built. When the LangGraph nodes realize they need data, they use the MCP Client to spawn the mcp_server.py as a completely isolated background subprocess. They communicate securely by piping JSON-RPC messages over standard input/output streams.
+
+4. The Execution Environment (MCP Server)
+This is the "Hands." The MCP server is the only part of the architecture that has permission to touch the local file system (to read Terraform files) or make outbound network calls (to GitHub). If the LLM goes rogue or hallucinates a malicious command, it gets trapped at the MCP boundary because the MCP Server only exposes strictly defined, predefined tools.
+
+This diagram perfectly captures the architecture you have successfully constructed locally.
+
+***
+
 ### What's Next on the Architect Journey?
 
 You have officially built an advanced agent. Looking at your `Project_2` repository structure, everything is beautifully organized. 
@@ -127,3 +196,20 @@ Where would you like to take this next?
 1. **Containerization:** Write a `Dockerfile` and `docker-compose.yml` to package this FastAPI/LangGraph app for enterprise deployment (Kubernetes readiness).
 2. **Real Tool Integration:** Swap out the mocked GitHub PR submission in `mcp_server.py` with the actual `PyGithub` library to push real commits.
 3. **Move to Project 3:** Start planning the next big architectural leap in your portfolio.
+
+
+<!-- Load Mermaid rendering engine for GitHub Pages -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+
+  // Convert GitHub Pages code blocks into Mermaid divs
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('code.language-mermaid').forEach(el => {
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = el.textContent;
+      el.parentElement.replaceWith(div);
+    });
+  });
+</script>
