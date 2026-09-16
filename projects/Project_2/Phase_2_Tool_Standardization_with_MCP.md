@@ -119,7 +119,7 @@ You just proved that you can decouple an AI's reasoning engine (LangGraph + Llam
 
 ***
 
-I need to clearly visualize the Security Boundary I just built. The entire purpose of the Model Context Protocol (MCP) is to decouple the "Brain" (the LLM and state machine) from the "Hands" (the tools executing code and interacting with enterprise APIs).
+You need to clearly visualize the Security Boundary you just built. The entire purpose of the Model Context Protocol (MCP) is to decouple the "Brain" (the LLM and state machine) from the "Hands" (the tools executing code and interacting with enterprise APIs).
 
 Here is the architectural diagram of the current system.
 
