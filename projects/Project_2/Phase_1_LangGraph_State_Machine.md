@@ -31,6 +31,7 @@ Project_2/
     ├── state.py         # Defines AgentState (TypedDict)
     ├── nodes.py         # Isolated Python functions for each step
     └── graph.py         # LangGraph edge routing & compilation
+```
 
 #### 2. The API Trigger Mechanism
 The FastAPI endpoint (main.py) initializes the state with the user's payload and invokes the LangGraph workflow:
@@ -104,6 +105,7 @@ PowerShell
 kubectl get pods
 ollama run llama3.1
 python main.py
+
 ```
 
 Open your browser and navigate to the built-in FastAPI Swagger UI: http://localhost:8000/docs
