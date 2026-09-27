@@ -49,12 +49,12 @@ graph TD
 
     subgraph "Project 3: Multi-Agent Supervisor (Many Brains, Specialized Tasks)"
         direction TB
-        Start((API Request)) --> Supervisor{Supervisor Agent\n(The Manager)}
+        Start((API Request)) --> Supervisor{"Supervisor Agent<br>(The Manager)"}
         
-        Supervisor -- "Assigns Infra Task" --> AgentA[Infrastructure Agent\n(Reads Code)]
+        Supervisor -- "Assigns Infra Task" --> AgentA["Infrastructure Agent<br>(Reads Code)"]
         AgentA -- "Returns Draft" --> Supervisor
         
-        Supervisor -- "Assigns Deployment Task" --> AgentB[Deployment Agent\n(Pushes PR)]
+        Supervisor -- "Assigns Deployment Task" --> AgentB["Deployment Agent<br>(Pushes PR)"]
         AgentB -- "Returns Status" --> Supervisor
         
         Supervisor -- "Job Done" --> Finish((End))
