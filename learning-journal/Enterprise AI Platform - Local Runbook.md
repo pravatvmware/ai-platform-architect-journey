@@ -1,3 +1,9 @@
+---
+layout: Core Documentation
+title: "🛠️ Enterprise AI Platform - Local Runbook
+nav_order: 1
+---
+
 # 🛠️ Enterprise AI Platform - Local Runbook
 
 This guide contains the step-by-step commands to provision, configure, and execute the local-first Enterprise AI infrastructure.
