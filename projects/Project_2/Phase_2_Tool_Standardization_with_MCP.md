@@ -227,25 +227,54 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 ```
-#### Trigger the Live Run
-Restart your FastAPI server (python main.py).
 
-Go to your Swagger UI (http://localhost:8000/docs).
+#### Step 1: Explicitly Pass Environment Variables
 
-Open the POST /agent/issues/resolve endpoint. You will now see a beautifully formatted JSON request body area!
+Open agent/nodes.py and find the execute_mcp_tool function. We need to import os and add the env parameter to the StdioServerParameters.
 
-Paste this exact payload matching your real GitHub issue:
+#### Step 2: The Surefire Launch Sequence
 
-``` JSON
-{
-  "issue_id": 1,
-  "description": "VPC-SC violation on subnet-a"
-}
+Your LangGraph agent successfully evaluated the issue, executed the MCP subprocess, passed in the environment variables, and knocked on GitHub's door. The architecture is working flawlessly.
+
+The 403 Resource not accessible by personal access token error means GitHub rejected the token because it doesn't have the specific permission required to post comments on issues.
+
+Here is how to fix the token permissions and get this comment posted.
+
+#### 🔑 The Fix: Update GitHub Token Permissions
+
+GitHub has two types of tokens. Depending on which one you created, here is what you need to check:
+
+If you created a "Fine-grained personal access token":
+
+Go to GitHub Settings -> Developer Settings -> Personal access tokens -> Fine-grained tokens.
+
+Click on your token to edit it (or create a new one).
+
+Scroll down to Repository permissions.
+
+Find Issues and change the access from "No access" to Read and write.
+
+Save/Generate the token.
+Generate and copy the token.
+
+#### 🚀 Inject the New Token and Rerun
+Once you have the new token with the correct permissions, let's inject it and fire the agent one last time:
+
+Stop your FastAPI server in the terminal (Ctrl+C).
+
+Update the environment variable in that same terminal session:
+
+``` PowerShell
+$env:GITHUB_TOKEN="ghp_your_new_token_here"
+Start the server again:
 ```
 
-#### Click Execute.
+``` PowerShell
+python main.py
+```
+Go to Swagger UI and execute the exact same request.
 
-Your LangGraph agent will receive the dynamic ID, parse the Terraform file via the MCP tool, draft the security group fix, and use your GITHUB_TOKEN to push a live comment directly to your ai-platform-architect-journey repo.
+The moment the agent finishes executing, you will see its automated fix pop up in the comment thread! Let me know when it lands.
 
 ***
 
