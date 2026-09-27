@@ -84,7 +84,7 @@ The Infrastructure Agent (The Coder): This LLM is given a strict system prompt (
 
 The Deployment Agent (The Operator): This LLM is given a strict system prompt ("You manage pull requests"). It is given the submit_github_pr MCP tool. It cannot read the codebase directly; it relies on the Infrastructure agent to hand it the drafted code.
 
-##### The Workflow in Action:
+#### The Workflow in Action:
 The Supervisor asks the Infrastructure Agent to write the fix. The Infrastructure Agent uses its tool, drafts the code, and passes it back to the Supervisor. The Supervisor says, "Great, now Deployment Agent, push this to GitHub." The Deployment Agent uses its tool, pushes the PR, and reports back. The Supervisor sees both tasks are done and ends the workflow.
 
 This pattern is highly resilient, scalable, and much easier to debug because each agent has a single, isolated responsibility.
