@@ -10,19 +10,23 @@ It Enables Granular Security: By separating agents, you can attach specific MCP 
 
 It Prepares for Observability: A multi-agent flow generates fascinating, complex decision trees. Once this is built, wrapping it in enterprise IT monitoring tools like Dynatrace or LangSmith becomes highly valuable because you actually have inter-agent traffic and delegation hand-offs to observe.
 
+***
+
 ### 🏗️ Project 3 Blueprint: The LangGraph Supervisor
 We will architect a system with three distinct entities:
 
-1. The Supervisor (The Router): Receives the initial GitHub issue, evaluates the requirement, and decides which sub-agent needs to act next. It acts purely as a LangGraph conditional edge.
+1. **The Supervisor (The Router):** Receives the initial GitHub issue, evaluates the requirement, and decides which sub-agent needs to act next. It acts purely as a LangGraph conditional edge.
 
-2.  The Infrastructure Engineer (Sub-Agent A): Armed only with the read_codebase MCP tool. Its sole job is to analyze Terraform files and draft code.
+2.  **The Infrastructure Engineer (Sub-Agent A)**: Armed only with the read_codebase MCP tool. Its sole job is to analyze Terraform files and draft code.
 
-3.  The Deployment Specialist (Sub-Agent B): Armed only with the submit_github_pr tool. Its job is to take the drafted code, format it for a pull request, and push it to the repo.
+3.  **The Deployment Specialist (Sub-Agent B):** Armed only with the submit_github_pr tool. Its job is to take the drafted code, format it for a pull request, and push it to the repo.
 
 This completely transforms your graph.py file from a simple linear sequence into a cyclical, intelligent graph where agents converse and hand off state.
 
-####
-Q)  Single AI agent LangGraph "Node" vs multi AI agent.
+***
+
+#### Q
+Single AI agent LangGraph "Node" vs multi AI agent.
 
 That is a brilliant catch, and it is exactly where most engineers get tripped up when moving from basic LangChain to advanced LangGraph.
 
@@ -85,3 +89,19 @@ The Deployment Agent (The Operator): This LLM is given a strict system prompt ("
 The Supervisor asks the Infrastructure Agent to write the fix. The Infrastructure Agent uses its tool, drafts the code, and passes it back to the Supervisor. The Supervisor says, "Great, now Deployment Agent, push this to GitHub." The Deployment Agent uses its tool, pushes the PR, and reports back. The Supervisor sees both tasks are done and ends the workflow.
 
 This pattern is highly resilient, scalable, and much easier to debug because each agent has a single, isolated responsibility.
+
+<!-- Load Mermaid rendering engine for GitHub Pages -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+
+  // Convert GitHub Pages code blocks into Mermaid divs
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('code.language-mermaid').forEach(el => {
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = el.textContent;
+      el.parentElement.replaceWith(div);
+    });
+  });
+</script>
