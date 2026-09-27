@@ -2,6 +2,8 @@
 
 **Objective:** Evolve the foundational GitHub Issue Agent (from Project 1) into a stateful, multi-agent system. This project introduces cyclical workflows, persistent memory, standardized tool integrations, and human-in-the-loop approvals, ultimately wrapping the agent as an enterprise-grade API.
 
+**Project 2 Goal:** (Single-Agent), a LangGraph "Node" was just a standard Python function (e.g., analyze_issue, draft_code). You had one brain (Llama 3.1) executing a linear checklist of tasks.
+
 ## Core Technologies
 * **Orchestration:** LangGraph
 * **Tool Standardization:** Model Context Protocol (MCP)
