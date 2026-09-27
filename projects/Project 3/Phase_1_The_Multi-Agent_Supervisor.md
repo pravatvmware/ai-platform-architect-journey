@@ -1,4 +1,4 @@
-## Multi-Agent Supervisor
+## Multi-Agent Supervisor (The Intelligence Path)
 
 Expanding a single agent into a delegated swarm is the defining characteristic of modern enterprise AI. It pushes the boundaries of autonomous AI agents and perfectly mirrors the distributed traffic routing concepts you would typically manage with an Istio ingress gateway on a Kubernetes cluster. Instead of routing HTTP requests to microservices, you are routing cognitive tasks to specialized LLMs.
 
