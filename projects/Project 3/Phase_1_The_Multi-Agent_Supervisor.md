@@ -25,8 +25,7 @@ This completely transforms your graph.py file from a simple linear sequence into
 
 ***
 
-#### Q
-Single AI agent LangGraph "Node" vs multi AI agent.
+#### Single AI agent LangGraph "Node" vs multi AI agent.
 
 That is a brilliant catch, and it is exactly where most engineers get tripped up when moving from basic LangChain to advanced LangGraph.
 
