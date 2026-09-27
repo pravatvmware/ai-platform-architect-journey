@@ -1,5 +1,8 @@
-
-**Bridging the gap between secure, scalable cloud infrastructure and Agentic AI.**
+---
+layout: default
+title: "🏗️ Bridging the gap between secure, scalable cloud infrastructure and Agentic AI."
+nav_order: 0
+---
 
 ---
 
