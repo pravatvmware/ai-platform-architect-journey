@@ -1,5 +1,6 @@
 import sys
 import json
+import os
 from typing import Dict, Any
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_ollama import ChatOllama
@@ -26,10 +27,13 @@ async def execute_mcp_tool(tool_name: str, arguments: dict) -> str:
     """Securely executes a tool on the isolated MCP server via stdio."""
     print(f"   [MCP Client] Spawning secure subprocess for '{tool_name}'...")
     
-    # FIX 1: Use sys.executable to ensure the subprocess uses your .venv
+    # Grab the current environment variables to pass down to the MCP server
+    current_env = os.environ.copy()
+    
     server_params = StdioServerParameters(
         command=sys.executable,
-        args=["agent/mcp_server.py"]
+        args=["agent/mcp_server.py"],
+        env=current_env  # <--- THIS INJECTS YOUR GITHUB TOKEN
     )
     
     async with stdio_client(server_params) as (read, write):

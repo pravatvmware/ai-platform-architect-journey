@@ -186,6 +186,67 @@ This is the "Hands." The MCP server is the only part of the architecture that ha
 
 This diagram perfectly captures the architecture you have successfully constructed locally.
 
+### Make the API Dynamic:
+Open your main.py file and update your FastAPI endpoint to use a Pydantic Model. This will automatically generate the correct input fields in your Swagger UI.
+
+Update your main.py to look like this:
+
+``` Python
+from fastapi import FastAPI
+from pydantic import BaseModel
+from langchain_core.messages import HumanMessage
+from agent.graph import app as agent_workflow
+
+app = FastAPI(title="Enterprise AI Agent API")
+
+# 1. Define the Expected Request Body for Swagger UI
+class IssueRequest(BaseModel):
+    issue_id: int
+    description: str
+
+# 2. Update the endpoint to accept the request body
+@app.post("/agent/issues/resolve")
+async def resolve_issue(request: IssueRequest):
+    # Pass the dynamic data from Swagger into the LangGraph state
+    initial_state = {
+        "issue_id": request.issue_id,
+        "messages": [HumanMessage(content=f"Please resolve this issue: {request.description}")]
+    }
+    
+    # Run the graph
+    final_state = await agent_workflow.ainvoke(initial_state)
+    
+    return {
+        "status": "success",
+        "issue_id": request.issue_id,
+        "agent_response": final_state["messages"][-1].content
+    }
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+```
+#### Trigger the Live Run
+Restart your FastAPI server (python main.py).
+
+Go to your Swagger UI (http://localhost:8000/docs).
+
+Open the POST /agent/issues/resolve endpoint. You will now see a beautifully formatted JSON request body area!
+
+Paste this exact payload matching your real GitHub issue:
+
+``` JSON
+{
+  "issue_id": 1,
+  "description": "VPC-SC violation on subnet-a"
+}
+```
+
+#### Click Execute.
+
+Your LangGraph agent will receive the dynamic ID, parse the Terraform file via the MCP tool, draft the security group fix, and use your GITHUB_TOKEN to push a live comment directly to your ai-platform-architect-journey repo.
+
 ***
 
 ### What's Next on the Architect Journey?
