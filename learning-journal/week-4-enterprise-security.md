@@ -1,3 +1,9 @@
+---
+title: "Week 4: Enterprise Guardrails, VPC-SC, and MLOps Governance"
+parent: "2. The Weekly Foundations"
+nav_order: 5
+---
+
 # Week 4: Enterprise Guardrails, VPC-SC, and MLOps Governance
 
 **Goal:** Transition local AI prototypes into a hardened GCP cloud architecture protected by VPC Service Controls and Workload Identity.

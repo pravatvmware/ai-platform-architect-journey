@@ -1,3 +1,9 @@
+---
+title: "Week 2: End-to-End Local RAG Pipeline Implementation"
+parent: "2. The Weekly Foundations"
+nav_order: 2
+---
+
 # Week 2: End-to-End Local RAG Pipeline Implementation
 
 **Goal:** Build and verify a complete vector ingestion and inference pipeline using PostgreSQL (`pgvector`), Ollama, and Python.

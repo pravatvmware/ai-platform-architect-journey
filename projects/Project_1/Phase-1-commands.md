@@ -1,3 +1,9 @@
+---
+title: "Project 1: Commands Build the Local Cluster & Istio Service Mesh"
+parent: "3. Project 1"
+nav_order: 2
+---
+
 Phase 1: Build the Local Cluster & Istio Service Mesh:
 
 1: Install kind multi node capable cluster.

@@ -1,3 +1,9 @@
+---
+title: "Week 1: Enterprise AI Architecture Foundations"
+parent: "2. The Weekly Foundations"
+nav_order: 1
+---
+
 # Week 1: Enterprise AI Architecture Foundations
 
 **Date:** July 2026  

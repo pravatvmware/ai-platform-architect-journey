@@ -1,3 +1,9 @@
+---
+title: "Week 3: Milestone ReAct Execution and Agentic Lessons"
+parent: "2. The Weekly Foundations"
+nav_order: 4
+---
+
 # Phase 3 Milestone: ReAct Execution & Agentic Lessons
 
 This is a flawless execution of the **ReAct (Reason + Act)** pattern!

@@ -1,3 +1,9 @@
+---
+title: "Project 2: Advanced Agentic AI Orchestration"
+parent: "4. Project 2"
+nav_order: 1
+---
+
 # 🏗️ Project 2: Advanced Agentic AI Orchestration
 
 **Objective:** Evolve the foundational GitHub Issue Agent (from Project 1) into a stateful, multi-agent system. This project introduces cyclical workflows, persistent memory, standardized tool integrations, and human-in-the-loop approvals, ultimately wrapping the agent as an enterprise-grade API.

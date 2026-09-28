@@ -1,3 +1,9 @@
+---
+title: "Project 3: The Next Architectural Leap"
+parent: "5. Project 3"
+nav_order: 1
+---
+
 # 🏗️ Project 3: The Next Architectural Leap
 
 Now that you have a functioning, secure agentic pipeline, it is time to think about scale, resilience, and advanced orchestration. For an AI Platform Architect, Project 3 should transition this from a "cool prototype" into an "enterprise-grade platform."

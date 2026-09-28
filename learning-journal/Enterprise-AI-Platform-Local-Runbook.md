@@ -1,6 +1,6 @@
 ---
-layout: Core Documentation
-title: "🛠️ Enterprise AI Platform - Local Runbook
+title: "🛠️ Enterprise AI Platform - Local Runbook"
+parent: "1. Core Documentation"
 nav_order: 1
 ---
 

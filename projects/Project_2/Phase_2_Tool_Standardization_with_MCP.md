@@ -1,3 +1,9 @@
+---
+title: "Project 2: Phase 2 Execution (Part 1): LLM Integration and Asynchronous Architecture"
+parent: "4. Project 2"
+nav_order: 3
+---
+
 ## 🛠️ Phase 2 Execution (Part 1): LLM Integration and Asynchronous Architecture
 
 In the first half of Phase 2, we replaced the mocked reasoning engine with a live, local LLM (Ollama) and refactored the entire LangGraph architecture to be fully asynchronous. This is a prerequisite for executing secure, non-blocking subprocesses via the Model Context Protocol (MCP).

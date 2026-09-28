@@ -1,3 +1,9 @@
+---
+title: "Week 3: Agentic Frameworks and Tool Orchestration"
+parent: "2. The Weekly Foundations"
+nav_order: 3
+---
+
 # Week 3: Agentic Frameworks and Tool Orchestration
 
 **Goal:** Transition from passive RAG systems to autonomous, action-taking AI agents using function calling.
