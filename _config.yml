@@ -1,4 +1,6 @@
 title: AI Platform Architect Journey
 description: From Cloud Architect to Enterprise AI Platform Architect
-theme: just-the-docs
+remote_theme: just-the-docs/just-the-docs
+plugins:
+  - jekyll-remote-theme
 markdown: kramdown
