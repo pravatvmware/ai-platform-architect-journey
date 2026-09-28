@@ -299,20 +299,3 @@ Where would you like to take this next?
 1. **Containerization:** Write a `Dockerfile` and `docker-compose.yml` to package this FastAPI/LangGraph app for enterprise deployment (Kubernetes readiness).
 2. **Real Tool Integration:** Swap out the mocked GitHub PR submission in `mcp_server.py` with the actual `PyGithub` library to push real commits.
 3. **Move to Project 3:** Start planning the next big architectural leap in your portfolio.
-
-
-<!-- Load Mermaid rendering engine for GitHub Pages -->
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
-
-  // Convert GitHub Pages code blocks into Mermaid divs
-  document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('code.language-mermaid').forEach(el => {
-      const div = document.createElement('div');
-      div.className = 'mermaid';
-      div.textContent = el.textContent;
-      el.parentElement.replaceWith(div);
-    });
-  });
-</script>

@@ -94,19 +94,3 @@ The Deployment Agent (The Operator): This LLM is given a strict system prompt ("
 The Supervisor asks the Infrastructure Agent to write the fix. The Infrastructure Agent uses its tool, drafts the code, and passes it back to the Supervisor. The Supervisor says, "Great, now Deployment Agent, push this to GitHub." The Deployment Agent uses its tool, pushes the PR, and reports back. The Supervisor sees both tasks are done and ends the workflow.
 
 This pattern is highly resilient, scalable, and much easier to debug because each agent has a single, isolated responsibility.
-
-<!-- Load Mermaid rendering engine for GitHub Pages -->
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
-
-  // Convert GitHub Pages code blocks into Mermaid divs
-  document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('code.language-mermaid').forEach(el => {
-      const div = document.createElement('div');
-      div.className = 'mermaid';
-      div.textContent = el.textContent;
-      el.parentElement.replaceWith(div);
-    });
-  });
-</script>

@@ -1,0 +1,22 @@
+<!-- Mermaid.js Injection -->
+<script type="module">
+  import mermaid from '[https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs](https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs)';
+  
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Find all standard Markdown code blocks labeled as mermaid
+    const mermaidBlocks = document.querySelectorAll('code.language-mermaid');
+    
+    mermaidBlocks.forEach(function(block) {
+      // 2. Create a new div that the Mermaid library can actually read
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = block.textContent;
+      
+      // 3. Replace the broken <pre><code> block with the new div
+      block.parentNode.replaceWith(div);
+    });
+    
+    // 4. Render the diagrams
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  });
+</script>
