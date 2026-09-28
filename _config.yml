@@ -4,3 +4,6 @@ remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-remote-theme
 markdown: kramdown
+# Enable Native Mermaid Support
+mermaid:
+  version: "10.1.0"
