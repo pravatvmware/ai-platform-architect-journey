@@ -1,32 +1,27 @@
-<!-- Mermaid.js Injection for Jekyll/Just-the-Docs -->
-<script type="module">
-  import mermaid from '[https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs](https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs)';
-  
-  // Initialize Mermaid
-  mermaid.initialize({ startOnLoad: false, theme: 'default' });
-
-  document.addEventListener("DOMContentLoaded", async function() {
-    // Find all Jekyll-generated mermaid wrappers
-    const mermaidBlocks = document.querySelectorAll('.language-mermaid');
+<!-- Mermaid.js Injection (v9 for Jekyll compatibility) -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Configure Mermaid
+    mermaid.initialize({ startOnLoad: false, theme: 'default' });
     
-    mermaidBlocks.forEach(function(block, index) {
-      // Extract the raw diagram text
-      const diagramText = block.textContent;
-      
-      // Create a clean div for Mermaid
-      const div = document.createElement('div');
+    // 2. Find all Jekyll Markdown mermaid code blocks
+    var blocks = document.querySelectorAll('code.language-mermaid');
+    
+    blocks.forEach(function(block) {
+      // 3. Create a raw div for the diagram
+      var div = document.createElement('div');
       div.className = 'mermaid';
-      div.id = 'mermaid-diagram-' + index;
-      div.textContent = diagramText;
+      div.textContent = block.textContent;
       
-      // Find the outermost wrapper that Jekyll created and replace it
-      const wrapper = block.closest('div.highlighter-rouge') || block;
-      wrapper.replaceWith(div);
+      // 4. Rip out the Jekyll wrapper and insert the raw div
+      var wrapper = block.closest('div.highlighter-rouge') || block.closest('pre');
+      if (wrapper) {
+         wrapper.parentNode.replaceChild(div, wrapper);
+      }
     });
-
-    // Tell Mermaid to render the new divs
-    await mermaid.run({
-      querySelector: '.mermaid'
-    });
+    
+    // 5. Force the render
+    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
   });
 </script>
