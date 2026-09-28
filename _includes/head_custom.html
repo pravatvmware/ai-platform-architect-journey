@@ -1,27 +1,36 @@
-<!-- Mermaid.js Injection (v9 for Jekyll compatibility) -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js"></script>
+<!-- Mermaid.js Injection (Smart Detection Fallback) -->
+<script src="[https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js](https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js)"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     // 1. Configure Mermaid
     mermaid.initialize({ startOnLoad: false, theme: 'default' });
     
-    // 2. Find all Jekyll Markdown mermaid code blocks
-    var blocks = document.querySelectorAll('code.language-mermaid');
+    // 2. Find ALL code blocks on the page (bypassing Jekyll's stripped classes)
+    var blocks = document.querySelectorAll('pre code');
     
     blocks.forEach(function(block) {
-      // 3. Create a raw div for the diagram
-      var div = document.createElement('div');
-      div.className = 'mermaid';
-      div.textContent = block.textContent;
+      var text = block.textContent.trim();
       
-      // 4. Rip out the Jekyll wrapper and insert the raw div
-      var wrapper = block.closest('div.highlighter-rouge') || block.closest('pre');
-      if (wrapper) {
-         wrapper.parentNode.replaceChild(div, wrapper);
+      // 3. Smart Detection: Does this text look like a Mermaid diagram?
+      if (text.startsWith('graph ') || text.startsWith('flowchart ') || text.startsWith('sequenceDiagram')) {
+        
+        // Create a raw div for the diagram
+        var div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = text;
+        
+        // Find the outermost wrapper Jekyll created
+        var pre = block.closest('pre');
+        var wrapper = pre.closest('div.highlighter-rouge') || pre;
+        
+        // Replace the plain text block with the Mermaid div
+        if (wrapper && wrapper.parentNode) {
+           wrapper.parentNode.replaceChild(div, wrapper);
+        }
       }
     });
     
-    // 5. Force the render
+    // 4. Force the render on our newly created divs
     mermaid.init(undefined, document.querySelectorAll('.mermaid'));
   });
 </script>
