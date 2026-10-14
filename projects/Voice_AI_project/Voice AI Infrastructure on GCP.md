@@ -1,3 +1,9 @@
+---
+title: "Project 4: Voice AI Infrastructure on GCP"
+parent: "6. Project gcp voice AI"
+nav_order: 1
+---
+
 # Project 4: Voice AI Infrastructure on GCP (UK Financial Sector)
 
 ## 1. Overview & Requirements
