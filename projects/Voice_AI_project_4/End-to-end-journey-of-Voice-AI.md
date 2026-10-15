@@ -1,6 +1,6 @@
 ---
 title: "End-to-end journey of a Voice AI request"
-parent: "6. Project gcp voice AI"
+parent: "6. Project 4 gcp voice AI"
 nav_order: 2
 ---
 

@@ -1,6 +1,6 @@
 ---
-title: "Project 4: Voice AI Infrastructure on GCP"
-parent: "6. Project gcp voice AI"
+title: "Voice AI Infrastructure on GCP"
+parent: "6. Project 4 gcp voice AI"
 nav_order: 1
 ---
 
