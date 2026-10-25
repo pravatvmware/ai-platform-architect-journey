@@ -187,8 +187,7 @@ By integrating Istio, Prometheus, Alertmanager, and Grafana, the local Enterpris
 
 4. **Grafana** provides the "single pane of glass" to visually correlate traffic spikes with latency degradation and 5xx errors during chaos testing.
 
-### Commands
-```bash
+## Commands Local testing
 kubectl port-forward deployment/frontend 8080:8080
 kubectl get configmap prometheus -n istio-system -o yaml > prometheus-cm.yaml 
 kubectl apply -f prometheus-cm.yaml
@@ -200,4 +199,3 @@ kubectl scale deployment productcatalogservice --replicas=0
 kubectl rollout restart deployment/prometheus -n istio-system 
 kubectl scale deployment productcatalogservice --replicas=1
 kubectl rollout restart deployment/prometheus -n istio-system
-```
