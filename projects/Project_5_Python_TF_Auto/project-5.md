@@ -1,8 +1,8 @@
 ---
 layout: default
 title: 7. Project 5 - Python & Terraform Automation
-nav_order: 8
-has_children: false
+nav_order: 6
+has_children: true
 ---
 
 # Project 5: Local-First Infrastructure Automation Framework (Python + Terraform)
