@@ -96,3 +96,6 @@ This portfolio demonstrates the complete lifecycle of operationalizing Agentic A
 
 **Final Takeaway:** 
 AI without guardrails is a liability. By treating AI models with the same rigorous networking, IAM, and observability standards as traditional enterprise databases, we can safely unlock the power of autonomous engineering platforms.
+
+**My Style of Doc**
+Markdown file structured for your GitHub Pages repository. My site uses the Just the Docs Jekyll theme, I have included the standard YAML front matter at the top so it automatically integrates into your side navigation. Included the standard YAML front matter at the top so it automatically integrates into your side navigation.
