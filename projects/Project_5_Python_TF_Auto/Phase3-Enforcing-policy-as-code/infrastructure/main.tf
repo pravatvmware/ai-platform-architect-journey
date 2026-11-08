@@ -16,24 +16,13 @@ resource "docker_image" "app_image" {
 }
 
 
-# Generated Container: frontend_node
-resource "docker_container" "frontend_node" {
+# Generated Container: frontend_node_dev
+resource "docker_container" "frontend_node_dev" {
   image = docker_image.app_image.image_id
-  name  = "frontend_node"
+  name  = "frontend_node_dev"
   
   ports {
     internal = 80
     external = 8081
-  }
-}
-
-# Generated Container: backend_api_node
-resource "docker_container" "backend_api_node" {
-  image = docker_image.app_image.image_id
-  name  = "backend_api_node"
-  
-  ports {
-    internal = 80
-    external = 8082
   }
 }
