@@ -1,0 +1,10 @@
+{
+  "base_image": "nginx:latest",
+  "containers": [
+    {
+      "name": "frontend_node_dev",
+      "internal_port": 80,
+      "external_port": 8081
+    }
+  ]
+}
