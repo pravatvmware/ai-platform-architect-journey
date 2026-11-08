@@ -66,4 +66,6 @@ Run the verification script again:
 python verify.py --env dev
 ```
 
-#### Expected Output: The Python SDK will instantly recognize that the live daemon state no longer matches the JSON architecture config. It will output 🚨 INFRASTRUCTURE DRIFT DETECTED 🚨, exit with a failure code, and generate a detailed audit artifact in your reports/ folder. To resolve this, simply re-run python deploy.py --env dev to allow Terraform to automatically restore the missing infrastructure.
+#### Expected Output: 
+
+The Python SDK will instantly recognize that the live daemon state no longer matches the JSON architecture config. It will output 🚨 INFRASTRUCTURE DRIFT DETECTED 🚨, exit with a failure code, and generate a detailed audit artifact in your reports/ folder. To resolve this, simply re-run python deploy.py --env dev to allow Terraform to automatically restore the missing infrastructure.
