@@ -63,9 +63,3 @@ This project follows a phased approach, evolving from a basic Python execution w
 - **Outcome:** A conversational infrastructure deployment engine.
 
 ---
-
-## 🛠️ Current Status: Phase 1 Implementation
-
-Currently initiating Phase 1. The immediate focus is establishing the Python wrapper and successfully deploying a local Docker container using Terraform via Python `subprocess`.
-
-[View Infrastructure Code on GitHub](#) *(Link to be added once repository is pushed)*
