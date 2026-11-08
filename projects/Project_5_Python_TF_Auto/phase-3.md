@@ -8,7 +8,7 @@ nav_order: 3
 # Phase 3: Enterprise Architecture & Security
 {: .no_toc }
 
-This phase introduces **Policy-as-Code** into the pipeline. In enterprise environments, infrastructure code is never applied blindly. This phase integrates **Checkov** to scan the generated Terraform plan. If the scanner detects security vulnerabilities (e.g., exposed ports, missing encryption), the Python orchestrator intercepts the failure and halts the pipeline before any infrastructure is provisioned.
+This phase elevates the framework to an enterprise-grade standard. It introduces **Policy-as-Code** (using Checkov) to halt insecure deployments, **Terraform Workspaces** to isolate state files across environments (Dev/UAT/Prod), and **Artifact Generation** to publish a consolidated Markdown execution report after every run.
 
 ## Table of contents
 {: .no_toc .text-delta }
@@ -23,23 +23,55 @@ This phase introduces **Policy-as-Code** into the pipeline. In enterprise enviro
 Install the Checkov policy-as-code scanner in your Python environment:
 
 ```bash
-pip install checkov
+pip install checkov jinja2
 ```
 
-Note: Your directory structure remains the same as Phase 2 (config.json and templates/main.tf.j2 do not change).
+## Directory Structure
+Update your project directory to support multiple environments and execution reports.
 
-## The Enterprise Gate Orchestrator
-Update your deploy.py script. This version introduces the run_security_scan() function, which acts as a strict gatekeeper between the terraform plan and terraform apply stages.
+```
+project-5/
+├── deploy.py
+├── configs/
+│   ├── dev.json
+│   └── prod.json
+├── templates/
+│   └── main.tf.j2
+├── reports/          <-- (Generated pipeline artifacts)
+└── infrastructure/   <-- (Generated .tf files and workspace state)
+```
 
-## Execution & Verification
-Run the Python pipeline:
+1. Environment Configurations
+Instead of a single config.json, create environment-specific configurations inside the configs/ folder.
 
-```Bash
-python deploy.py
+configs/dev.json
+
+configs/prod.json
+
+2. The Enterprise Gate Orchestrator
+Replace deploy.py with this finalized Phase 3 engine.
+
+Key features introduced in this script:
+
+setup_workspace(): Switches Terraform workspaces based on the --env flag, isolating state files just like an S3 backend.
+
+run_security_scan(): Uses shutil.which to reliably locate Checkov, executing a --soft-fail scan to log warnings without breaking local Docker tests.
+
+publish_report(): Extracts the readable Terraform plan and Checkov scan, publishing a timestamped .md artifact for auditing.
+
+3. Execution & Verification
+Run the pipeline by passing the --env flag targeting your desired environment config.
+
+```Python
+python deploy.py --env dev
 ```
 
 ### Expected Output
-Because this framework currently targets local Docker infrastructure, Checkov may pass immediately (as it heavily targets AWS/Azure/GCP defaults). The terminal will output:✅ SECURITY SCAN PASSED. No policy violations found.
-and proceed to safely deploy the containers.
+The framework will create (or switch to) the dev Terraform workspace.
 
-In a production Azure environment, this exact same mechanism would flag issues like unencrypted storage accounts or public IP exposures, halting the pipeline before a costly or insecure deployment occurs.
+Checkov will execute a soft-fail scan on the dynamic JSON plan and print warnings to the terminal.
+
+A timestamped artifact will be saved in the reports/ folder (e.g., dev_execution_report_2026-11-08_12-00-00.md).
+
+Terraform will apply the Dev infrastructure safely to your local Docker daemon.
+
