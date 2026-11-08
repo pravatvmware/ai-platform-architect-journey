@@ -7,22 +7,33 @@ terraform {
   }
 }
 
-# Configures the provider to use your local Docker Desktop daemon
 provider "docker" {}
 
-# Simulates fetching a machine image (like an Azure Compute Gallery image)
-resource "docker_image" "nginx" {
+# Dynamically fetch the base image from config
+resource "docker_image" "app_image" {
   name         = "nginx:latest"
   keep_locally = false
 }
 
-# Simulates provisioning a Virtual Machine
-resource "docker_container" "web_server" {
-  image = docker_image.nginx.image_id
-  name  = "phase1_local_web"
+
+# Generated Container: frontend_node
+resource "docker_container" "frontend_node" {
+  image = docker_image.app_image.image_id
+  name  = "frontend_node"
   
   ports {
     internal = 80
-    external = 8080
+    external = 8081
+  }
+}
+
+# Generated Container: backend_api_node
+resource "docker_container" "backend_api_node" {
+  image = docker_image.app_image.image_id
+  name  = "backend_api_node"
+  
+  ports {
+    internal = 80
+    external = 8082
   }
 }
