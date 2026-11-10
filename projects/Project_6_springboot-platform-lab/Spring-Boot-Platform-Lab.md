@@ -36,3 +36,6 @@ Code → GitHub Actions (build, test, image) → registry → Helm values
 
 Java 21 · Spring Boot · Maven · Docker · kind · Istio · Helm ·
 GitHub Actions · Prometheus · Grafana
+
+five claims: read, debug, containerize, Actuator, Maven pipelines.
+
