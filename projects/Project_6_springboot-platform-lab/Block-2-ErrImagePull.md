@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Block 2: Diagnosing ErrImagePull: This Is the Exact Case I Warned About
+title: Block 2, Diagnosing ErrImagePull, This Is the Exact Case I Warned About
 parent: 8. Spring Boot Platform Lab
 nav_order: 5
 ---

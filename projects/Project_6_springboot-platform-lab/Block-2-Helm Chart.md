@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Block 2: Part B: Helm Chart
+title: Block 2, Part B, Helm Chart
 parent: 8. Spring Boot Platform Lab
 nav_order: 6
 ---

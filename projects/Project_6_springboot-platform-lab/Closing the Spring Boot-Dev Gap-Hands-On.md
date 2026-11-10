@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Phase 1 - Closing the Spring Boot / Dev Gap (Hands-On)
+title: Phase 1 Closing the Spring Boot Dev Gap (Hands-On)
 parent: 8. Spring Boot Platform Lab
 nav_order: 1
 ---

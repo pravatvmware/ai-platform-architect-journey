@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Block 1: App, Actuator, Docker Q/A
+title: Block 1, App, Actuator, Docker Q/A
 parent: 8. Spring Boot Platform Lab
 nav_order: 3
 ---

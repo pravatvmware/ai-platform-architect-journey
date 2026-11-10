@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Block 2: Part C: Gateway Working, Sidecar Confirmed
+title: Block 2, Part C, Gateway Working, Sidecar Confirmed
 parent: 8. Spring Boot Platform Lab
 nav_order: 8
 ---

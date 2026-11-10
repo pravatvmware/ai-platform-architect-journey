@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Block 2: Deploy to kind, then Helm, then Istio
+title: Block 2, Deploy to kind, then Helm, then Istio
 parent: 8. Spring Boot Platform Lab
 nav_order: 4
 ---

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Block 2: Istio, Starting Point
+title: Block 2, Istio, Starting Point
 parent: 8. Spring Boot Platform Lab
 nav_order: 7
 ---
