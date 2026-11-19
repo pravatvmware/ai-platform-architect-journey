@@ -1,3 +1,10 @@
+---
+layout: default
+title: Phase 4 Curriculum
+parent: 9. Code-Quest-build-by-your-fatcher
+nav_order: 4
+---
+
 # 04 · Curriculum
 
 Every Learning Path lesson is available in **Python, C#, C++ and Java**, and ends with an assignment themed to the learner's interest (Games, 3D Animation, VFX or Film).

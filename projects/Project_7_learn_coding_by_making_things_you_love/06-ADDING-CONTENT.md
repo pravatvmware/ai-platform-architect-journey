@@ -1,3 +1,10 @@
+---
+layout: default
+title: Phase 6 Adding or changing content
+parent: 9. Code-Quest-build-by-your-fatcher
+nav_order: 6
+---
+
 # 06 · Adding or changing content
 
 All lessons are plain Python data. No database, no build step. Restart the server (or `docker compose up --build`) after a change.

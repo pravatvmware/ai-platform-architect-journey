@@ -1,6 +1,6 @@
 ---
 title: "Project 3: The Next Architectural Leap"
-parent: "5. Project 3"
+parent: "5. Multi-Agent Supervisor"
 nav_order: 1
 ---
 

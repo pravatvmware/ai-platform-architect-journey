@@ -1,3 +1,10 @@
+---
+layout: default
+title: Phase 8 Quality and known limits
+parent: 9. Code-Quest-build-by-your-fatcher
+nav_order: 8
+---
+
 # 08 · Quality and known limits
 
 An honest picture of what has been verified and what still needs checking on a real machine.

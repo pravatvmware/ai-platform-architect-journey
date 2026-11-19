@@ -1,3 +1,10 @@
+---
+layout: default
+title: Phase 7 Build journey
+parent: 9. Code-Quest-build-by-your-fatcher
+nav_order: 7
+---
+
 # 07 · Build journey
 
 How Code Quest grew from a one-line idea to a platform, and what was learned on the way. Useful if you want to understand why things are the way they are.

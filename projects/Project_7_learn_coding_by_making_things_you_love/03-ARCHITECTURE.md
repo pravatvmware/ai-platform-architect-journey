@@ -1,3 +1,10 @@
+---
+layout: default
+title: Phase 3 Architecture
+parent: 9. Code-Quest-build-by-your-fatcher
+nav_order: 3
+---
+
 # 03 · Architecture
 
 ## Big picture

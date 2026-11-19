@@ -1,6 +1,6 @@
 ---
 title: "Project 2: Advanced Agentic AI Orchestration"
-parent: "4. Project 2"
+parent: "4. Advanced Agentic AI Orchestration"
 nav_order: 1
 ---
 

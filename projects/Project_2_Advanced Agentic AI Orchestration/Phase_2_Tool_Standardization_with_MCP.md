@@ -1,6 +1,6 @@
 ---
 title: "Project 2: Phase 2 Execution (Part 1): LLM Integration and Asynchronous Architecture"
-parent: "4. Project 2"
+parent: "4. Advanced Agentic AI Orchestration"
 nav_order: 3
 ---
 

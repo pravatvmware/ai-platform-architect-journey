@@ -1,6 +1,6 @@
 ---
 title: "Phase 1: Multi-Agent Supervisor (The Intelligence Path)"
-parent: "5. Project 3"
+parent: "5. Multi-Agent Supervisor"
 nav_order: 2
 ---
 

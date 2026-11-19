@@ -1,3 +1,10 @@
+---
+layout: default
+title: Phase 5 Setup and deployment
+parent: 9. Code-Quest-build-by-your-fatcher
+nav_order: 5
+---
+
 # 05 · Setup and deployment
 
 ## Option A: Docker (recommended)

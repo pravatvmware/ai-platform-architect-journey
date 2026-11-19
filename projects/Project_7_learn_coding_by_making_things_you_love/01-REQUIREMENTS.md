@@ -1,3 +1,10 @@
+---
+layout: default
+title: Phase 1 Requirements
+parent: 9. Code-Quest-build-by-your-fatcher
+nav_order: 1
+---
+
 # 01 · Requirements
 
 ## The problem

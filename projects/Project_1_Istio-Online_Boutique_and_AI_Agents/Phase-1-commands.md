@@ -1,6 +1,6 @@
 ---
 title: "Project 1: Commands Build the Local Cluster & Istio Service Mesh"
-parent: "3. Project 1"
+parent: "3. Istio-Online_Boutique_and_AI_Agents"
 nav_order: 2
 ---
 

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Phase 2 What we built
+parent: 9. Code-Quest-build-by-your-fatcher
+nav_order: 2
+---
+
 # 02 · What we built
 
 ## Summary

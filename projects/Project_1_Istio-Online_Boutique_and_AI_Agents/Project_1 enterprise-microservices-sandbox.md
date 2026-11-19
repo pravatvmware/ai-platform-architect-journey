@@ -1,6 +1,6 @@
 ---
 title: "Project 1: Enterprise Microservices Sandbox: Istio, Online Boutique and AI Agents"
-parent: "3. Project 1"
+parent: "3. Istio-Online_Boutique_and_AI_Agents"
 nav_order: 1
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Observability and Alerting with Prometheus"
-parent: "3. Project 1"
+parent: "3. Istio-Online_Boutique_and_AI_Agents"
 nav_order: 3
 ---
 
