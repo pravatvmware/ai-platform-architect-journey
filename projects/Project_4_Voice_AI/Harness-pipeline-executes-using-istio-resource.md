@@ -1,6 +1,6 @@
 ---
 title: "Map out how a Harness pipeline executes a Canary deployment using these Istio resources"
-parent: "6. Project 4 gcp voice AI"
+parent: "6. gcp voice AI"
 nav_order: 3
 ---
 

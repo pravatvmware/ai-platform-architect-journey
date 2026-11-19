@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 7. Project 5 - Python & Terraform Automation
+title: 7. Python & Terraform Automation
 nav_order: 6
 has_children: true
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Automated rollback driven by Dynatrace observability"
-parent: "6. Project 4 gcp voice AI"
+parent: "6. gcp voice AI"
 nav_order: 6
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Phase 3 - Enterprise Security
-parent: 7. Project 5 - Python & Terraform Automation
+parent: 7. Python & Terraform Automation
 nav_order: 3
 ---
 

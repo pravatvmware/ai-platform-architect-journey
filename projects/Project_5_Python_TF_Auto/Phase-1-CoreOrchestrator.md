@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Phase 1 - Core Orchestrator
-parent: 7. Project 5 - Python & Terraform Automation
+parent: 7. Python & Terraform Automation
 nav_order: 1
 ---
 

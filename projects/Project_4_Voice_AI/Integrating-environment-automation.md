@@ -1,6 +1,6 @@
 ---
 title: "Integrating Harness, Terraform, Google Kubernetes Engine (GKE), and Google Artifact Registry"
-parent: "6. Project 4 gcp voice AI"
+parent: "6. gcp voice AI"
 nav_order: 5
 ---
 

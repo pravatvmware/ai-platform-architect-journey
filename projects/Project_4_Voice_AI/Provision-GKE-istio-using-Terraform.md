@@ -1,6 +1,6 @@
 ---
 title: "provision the underlying GKE cluster and configure these Istio components initially using Terraform"
-parent: "6. Project 4 gcp voice AI"
+parent: "6. gcp voice AI"
 nav_order: 4
 ---
 
