@@ -20,13 +20,13 @@ Most AI development happens in isolated labs. My focus is operationalizing AI: d
 
 This portfolio documents my hands-on transition and active engineering projects, building enterprise-grade AI platforms from the ground up.
 
-### 1. Local-First Enterprise RAG Pipeline (In Progress)
+### 1. Local-First Enterprise RAG Pipeline
 *Designing a secure, zero-cost local environment mimicking GCP enterprise architecture.*
 * **Architecture:** Kubernetes (Kind), PostgreSQL + pgvector, Ollama (Local LLMs).
 * **Focus:** Deploying a secure data ingestion and retrieval pipeline entirely on local infrastructure, proving data privacy and system isolation before cloud deployment.
 * [View Architecture Diagrams](./architecture-diagrams/local-rag-architecture.md) | [View Infrastructure Code](./infrastructure/local-k8s/)
 
-### 2. Autonomous GitHub Issue Triage Agent (Planned)
+### 2. Autonomous GitHub Issue Triage Agent
 *Orchestrating AI agents to automate platform engineering workflows.*
 * **Architecture:** Python, LangChain, Function Calling, API Webhooks.
 * **Focus:** Building an autonomous agent that reads incoming infrastructure issues, queries the repository codebase for context, and proposes terraform/code fixes via pull request. 
