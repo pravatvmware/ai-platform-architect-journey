@@ -120,3 +120,10 @@ Rules that catch people:
 ## Next
 
 [Block 4: Break things and fix them](04-break-and-fix)
+
+
+## 2026-11-26: ImagePullBackOff after cluster rebuild
+- **Symptom:** pod 1/2, demo container ImagePullBackOff
+- **Root cause:** the chart pointed to a GHCR image that CI never pushed (CI failed), and the rebuilt cluster no longer had the side-loaded image
+- **Fix:** pushed pravatvmware/springboot-demo:1 to Docker Hub, updated values.yaml, helm upgrade
+- **Lesson:** the registry is a dependency of the cluster. Keep the image reference in values, verify the tag exists before deploying
