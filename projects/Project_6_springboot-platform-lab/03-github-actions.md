@@ -127,3 +127,10 @@ Rules that catch people:
 - **Root cause:** the chart pointed to a GHCR image that CI never pushed (CI failed), and the rebuilt cluster no longer had the side-loaded image
 - **Fix:** pushed pravatvmware/springboot-demo:1 to Docker Hub, updated values.yaml, helm upgrade
 - **Lesson:** the registry is a dependency of the cluster. Keep the image reference in values, verify the tag exists before deploying
+
+## 2026-11-26: GHCR push failed, Docker Hub worked
+- **Symptom:** CI red on the GHCR step; the same pipeline pushed fine to Docker Hub
+- **Diagnosis:** build and test steps passed, so the failure was registry-specific
+- **Root cause:** (fill in: workflow permissions / missing packages: write / image name case)
+- **Fix:**
+- **Lesson:** GHCR needs packages: write and a lowercase name, and authenticates with GITHUB_TOKEN rather than stored credentials, which is a security advantage over Docker Hub tokens
